@@ -1,0 +1,1 @@
+# mini_cli_for_django
