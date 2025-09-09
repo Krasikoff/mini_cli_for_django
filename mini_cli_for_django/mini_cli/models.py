@@ -2,7 +2,6 @@ from django.db import models
 import subprocess
 import re
 import json 
-from time import sleep
 
 from django.contrib.auth import get_user_model
 from .constants import FILENAME
@@ -33,7 +32,7 @@ class Rule(models.Model):
             json_result = {
                 'returncode': result.returncode,
                 'stdout': result.stdout.decode('utf-8'),
-                'stderr': result.stderr.decode('utf-8')
+                'stderr': result.stderr.decode('utf-8'),
             }
             try:
                 with open(FILENAME, 'w') as f:
@@ -47,6 +46,7 @@ class Rule(models.Model):
     def save(self, **kwargs):
         with open(FILENAME, 'r') as f:
             result = json.load(f)
+        print('!!!WE ARE HERE!!!')
         print(result)
 
         if not result['returncode']:
@@ -62,6 +62,6 @@ def valid_python_code(code):
     return False
 
 
-class Test(models.Model):
-    test = models.TextField('test')
-    another_field = models.CharField('field')
+# class Test(models.Model):
+#     test = models.TextField('test')
+#     another_field = models.CharField('field')

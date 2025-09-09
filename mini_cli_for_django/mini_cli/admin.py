@@ -11,7 +11,7 @@ class RuleAdmin(admin.ModelAdmin):
     actions = ['do_it']
 
 
-    @admin.action(description='Mark smthng')
+    @admin.action(description='Migrate')
     def do_it(self, request, queryset):
         self.message_user(request, "books successfully marked as published.", messages.SUCCESS)
 
@@ -22,16 +22,15 @@ class RuleAdmin(admin.ModelAdmin):
                 try:
                     obj.execute()
                     obj.was_executed_before = True
-                    # sleep(1)
-                    # obj.save()
+                    sleep(3)
+                    obj.save()
                 except (ValueError, TypeError):
                     pass
             else:
                     obj.execute()
-                    # sleep(5)
-                    # obj.save()
+                    sleep(3)
+                    obj.save()
+            self.message_user(request, 'Выполнено',messages.SUCCESS)
             return redirect(".")
         return super().response_change(request, obj)
 
-
-# admin.site.register(Rule, RuleAdmin)
